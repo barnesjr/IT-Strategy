@@ -11,6 +11,7 @@ import { CapabilityAreaPage } from '@/pages/CapabilityArea';
 import GovComplianceSummary from '@/pages/GovComplianceSummary';
 import GovComplianceSection from '@/pages/GovComplianceSection';
 import { findNextUnscored } from '@/hooks/useNextUnscored';
+import { ExportPage } from '@/pages/Export';
 
 // Temporary placeholders for components not yet built
 const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
@@ -178,7 +179,7 @@ function AppContent() {
                 <Route path="/gov-compliance" element={<GovComplianceSummary />} />
                 <Route path="/gov-compliance/:sectionId" element={<GovComplianceSection />} />
                 <Route path="/gov-compliance/:sectionId/:areaId" element={<GovComplianceSection />} />
-                <Route path="/export" element={<PlaceholderPage name="Export" />} />
+                <Route path="/export" element={<ExportPage />} />
                 <Route path="/settings" element={<PlaceholderPage name="Settings" />} />
                 <Route path="/help" element={<PlaceholderPage name="Help" />} />
               </Routes>

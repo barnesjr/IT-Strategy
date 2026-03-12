@@ -12,9 +12,11 @@ import uvicorn
 try:
     from .models import AssessmentData
     from .data_manager import DataManager
+    from .export_engine import ExportEngine
 except ImportError:
     from models import AssessmentData
     from data_manager import DataManager
+    from export_engine import ExportEngine
 
 
 def get_base_dir() -> str:
@@ -36,6 +38,7 @@ def get_resource_dir() -> str:
 BASE_DIR = get_base_dir()
 RESOURCE_DIR = get_resource_dir()
 data_manager = DataManager(BASE_DIR, resource_dir=RESOURCE_DIR)
+export_engine = ExportEngine(BASE_DIR, resource_dir=RESOURCE_DIR)
 
 VALID_EXPORT_TYPES = [
     "findings", "executive-summary", "gap-analysis", "workbook",
@@ -80,7 +83,15 @@ async def get_framework():
 async def export_deliverable(export_type: str):
     if export_type not in VALID_EXPORT_TYPES:
         raise HTTPException(status_code=400, detail=f"Unknown export type: {export_type}")
-    raise HTTPException(status_code=501, detail="Export not implemented yet")
+    try:
+        data = data_manager.load_assessment()
+        if export_type == "all":
+            filenames = export_engine.export_all(data)
+        else:
+            filenames = [export_engine.export(export_type, data)]
+        return {"filenames": filenames}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # --- Static File Serving ---
