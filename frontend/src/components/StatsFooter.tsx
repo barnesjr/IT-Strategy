@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from '@/store';
+import { useNextUnscored } from '@/hooks/useNextUnscored';
 import { overallCompletion, pillarScore, capabilityAreaScore } from '@/scoring';
 import { getMaturityBand } from '@/types';
 
@@ -15,6 +16,8 @@ export function StatsFooter() {
   const { data, saveStatus } = useStore();
   const { pillarId, areaId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+  const nextUnscored = useNextUnscored(data);
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
@@ -73,6 +76,18 @@ export function StatsFooter() {
             {sectionScore.toFixed(2)}
           </span>
         </div>
+      )}
+
+      {/* Next unscored */}
+      {nextUnscored && (
+        <button
+          onClick={() => navigate(`${nextUnscored.path}?focus=${nextUnscored.itemId}`)}
+          className="flex items-center gap-1.5 text-accent hover:text-accent-bright transition-colors"
+          title={`Next: ${nextUnscored.areaName} (${nextUnscored.remaining} remaining)`}
+        >
+          <span className="font-medium">{nextUnscored.remaining} remaining</span>
+          <span>&rarr;</span>
+        </button>
       )}
 
       <div className="flex-1" />
