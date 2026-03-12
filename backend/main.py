@@ -9,6 +9,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
 
+try:
+    from .models import AssessmentData
+    from .data_manager import DataManager
+except ImportError:
+    from models import AssessmentData
+    from data_manager import DataManager
+
 
 def get_base_dir() -> str:
     """Get the base directory (where the executable or script lives).
@@ -28,30 +35,52 @@ def get_resource_dir() -> str:
 
 BASE_DIR = get_base_dir()
 RESOURCE_DIR = get_resource_dir()
+data_manager = DataManager(BASE_DIR, resource_dir=RESOURCE_DIR)
+
+VALID_EXPORT_TYPES = [
+    "findings", "executive-summary", "gap-analysis", "workbook",
+    "outbrief", "heatmap", "quick-wins", "compliance-mapping", "all",
+]
 
 app = FastAPI(title="IT Strategy Assessment Tool", version="1.0.0")
 
 
-# --- API Routes (stubs) ---
+# --- API Routes ---
 
 @app.get("/api/assessment")
 async def get_assessment():
-    raise HTTPException(status_code=501, detail="Not implemented yet")
+    try:
+        data = data_manager.load_assessment()
+        return data.model_dump()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.put("/api/assessment")
-async def save_assessment():
-    raise HTTPException(status_code=501, detail="Not implemented yet")
+async def save_assessment(data: AssessmentData):
+    try:
+        data_manager.save_assessment(data)
+        return {"status": "saved"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/api/framework")
 async def get_framework():
-    raise HTTPException(status_code=501, detail="Not implemented yet")
+    try:
+        fw = data_manager.load_framework()
+        return fw
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Framework file not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/api/export/{export_type}")
 async def export_deliverable(export_type: str):
-    raise HTTPException(status_code=501, detail="Not implemented yet")
+    if export_type not in VALID_EXPORT_TYPES:
+        raise HTTPException(status_code=400, detail=f"Unknown export type: {export_type}")
+    raise HTTPException(status_code=501, detail="Export not implemented yet")
 
 
 # --- Static File Serving ---
