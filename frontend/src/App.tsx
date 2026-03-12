@@ -12,14 +12,9 @@ import GovComplianceSummary from '@/pages/GovComplianceSummary';
 import GovComplianceSection from '@/pages/GovComplianceSection';
 import { findNextUnscored } from '@/hooks/useNextUnscored';
 import { ExportPage } from '@/pages/Export';
-
-// Temporary placeholders for components not yet built
-const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
-
-// Temporary page placeholders
-function PlaceholderPage({ name }: { name: string }) {
-  return <div className="text-text-secondary text-sm">{name} — coming soon</div>;
-}
+import { SettingsPage } from '@/pages/Settings';
+import { HelpPage } from '@/pages/Help';
+import { CommandPalette } from '@/components/CommandPalette';
 
 const SIDEBAR_MIN = 220;
 const SIDEBAR_MAX = 480;
@@ -180,8 +175,8 @@ function AppContent() {
                 <Route path="/gov-compliance/:sectionId" element={<GovComplianceSection />} />
                 <Route path="/gov-compliance/:sectionId/:areaId" element={<GovComplianceSection />} />
                 <Route path="/export" element={<ExportPage />} />
-                <Route path="/settings" element={<PlaceholderPage name="Settings" />} />
-                <Route path="/help" element={<PlaceholderPage name="Help" />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/help" element={<HelpPage />} />
               </Routes>
             </PageTransition>
           </div>
