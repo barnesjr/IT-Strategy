@@ -8,22 +8,16 @@ import { ClientInfoPage } from '@/pages/ClientInfo';
 import { DashboardPage } from '@/pages/Dashboard';
 import { PillarSummaryPage } from '@/pages/PillarSummary';
 import { CapabilityAreaPage } from '@/pages/CapabilityArea';
+import GovComplianceSummary from '@/pages/GovComplianceSummary';
+import GovComplianceSection from '@/pages/GovComplianceSection';
+import { findNextUnscored } from '@/hooks/useNextUnscored';
 
 // Temporary placeholders for components not yet built
 const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
-const findNextUnscored = (_data: unknown) => null;
 
 // Temporary page placeholders
 function PlaceholderPage({ name }: { name: string }) {
   return <div className="text-text-secondary text-sm">{name} — coming soon</div>;
-}
-
-function GovComplianceSummary() {
-  return <PlaceholderPage name="Gov Compliance Summary" />;
-}
-
-function GovComplianceSection() {
-  return <PlaceholderPage name="Gov Compliance Section" />;
 }
 
 const SIDEBAR_MIN = 220;
