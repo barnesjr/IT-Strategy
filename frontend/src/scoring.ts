@@ -1,4 +1,4 @@
-import type { AssessmentItem, CapabilityArea, Pillar, ComplianceSection, ComplianceSubModule, AssessmentData } from './types';
+import type { AssessmentItem, CapabilityArea, Pillar, ComplianceSection, AssessmentData } from './types';
 
 export function getItemsScored(items: AssessmentItem[]): number {
   return items.filter((i) => i.score !== null || i.na).length;

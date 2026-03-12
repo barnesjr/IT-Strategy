@@ -2,11 +2,13 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { StoreProvider, useStore } from '@/store';
 import { Sidebar } from '@/components/Sidebar';
+import { Breadcrumb } from '@/components/Breadcrumb';
 import { ClientInfoPage } from '@/pages/ClientInfo';
 import { DashboardPage } from '@/pages/Dashboard';
+import { PillarSummaryPage } from '@/pages/PillarSummary';
+import { CapabilityAreaPage } from '@/pages/CapabilityArea';
 
 // Temporary placeholders for components not yet built
-const Breadcrumb = () => null;
 const StatsFooter = () => null;
 const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
 const findNextUnscored = (_data: unknown) => null;
@@ -177,8 +179,8 @@ function AppContent() {
               <Routes>
                 <Route path="/" element={<ClientInfoPage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/pillars/:pillarId" element={<PlaceholderPage name="Pillar Summary" />} />
-                <Route path="/pillars/:pillarId/:areaId" element={<PlaceholderPage name="Capability Area" />} />
+                <Route path="/pillars/:pillarId" element={<PillarSummaryPage />} />
+                <Route path="/pillars/:pillarId/:areaId" element={<CapabilityAreaPage />} />
                 <Route path="/gov-compliance" element={<GovComplianceSummary />} />
                 <Route path="/gov-compliance/:sectionId" element={<GovComplianceSection />} />
                 <Route path="/gov-compliance/:sectionId/:areaId" element={<GovComplianceSection />} />
