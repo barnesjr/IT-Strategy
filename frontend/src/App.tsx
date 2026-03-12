@@ -1,25 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { StoreProvider, useStore } from '@/store';
+import { Sidebar } from '@/components/Sidebar';
+import { ClientInfoPage } from '@/pages/ClientInfo';
+import { DashboardPage } from '@/pages/Dashboard';
 
 // Temporary placeholders for components not yet built
-const Sidebar = ({ width, collapsed, onToggleCollapse }: { width: number; collapsed: boolean; onToggleCollapse: () => void }) => (
-  <aside style={{ width }} className="h-screen bg-surface-dark shrink-0 border-r border-border-subtle flex flex-col">
-    <div className="px-4 py-4 border-b border-border-subtle flex items-center">
-      {!collapsed && <span className="text-white font-semibold text-[15px]">IT Strategy Assessment</span>}
-      <button onClick={onToggleCollapse} className="ml-auto text-text-tertiary hover:text-white">
-        {collapsed ? '\u2192' : '\u2190'}
-      </button>
-    </div>
-    <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 text-sm text-text-secondary">
-      <a href="/" className="block px-3 py-2 rounded-lg hover:bg-surface-elevated/60">Client Info</a>
-      <a href="/dashboard" className="block px-3 py-2 rounded-lg hover:bg-surface-elevated/60">Dashboard</a>
-      <a href="/export" className="block px-3 py-2 rounded-lg hover:bg-surface-elevated/60">Export</a>
-      <a href="/settings" className="block px-3 py-2 rounded-lg hover:bg-surface-elevated/60">Settings</a>
-      <a href="/help" className="block px-3 py-2 rounded-lg hover:bg-surface-elevated/60">Help</a>
-    </nav>
-  </aside>
-);
 const Breadcrumb = () => null;
 const StatsFooter = () => null;
 const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
@@ -28,14 +14,6 @@ const findNextUnscored = (_data: unknown) => null;
 // Temporary page placeholders
 function PlaceholderPage({ name }: { name: string }) {
   return <div className="text-text-secondary text-sm">{name} — coming soon</div>;
-}
-
-function ClientInfoPage() {
-  return <PlaceholderPage name="Client Info" />;
-}
-
-function DashboardPage() {
-  return <PlaceholderPage name="Dashboard" />;
 }
 
 function GovComplianceSummary() {
