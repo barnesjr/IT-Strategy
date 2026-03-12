@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useStore } from '@/store';
-import type { Pillar } from '@/types';
+import { pillarScore, pillarCompletion } from '@/scoring';
 import {
   ChevronDown,
   ChevronRight,
@@ -30,28 +30,6 @@ const PILLAR_ICONS: Record<string, typeof Shield> = {
   'workforce-culture': Users,
   'innovation-digital': Lightbulb,
 };
-
-// Temporary scoring stubs until scoring.ts is created in Chunk 4
-function pillarCompletion(pillar: Pillar) {
-  let scored = 0, total = 0;
-  for (const ca of pillar.capability_areas) {
-    for (const item of ca.items) {
-      total++;
-      if (item.score !== null || item.na) scored++;
-    }
-  }
-  return { scored, total };
-}
-
-function pillarScore(pillar: Pillar): number | null {
-  const scores: number[] = [];
-  for (const ca of pillar.capability_areas) {
-    for (const item of ca.items) {
-      if (item.score !== null && !item.na) scores.push(item.score);
-    }
-  }
-  return scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
-}
 
 function ProgressRing({ percent, size = 20 }: { percent: number; size?: number }) {
   const r = (size - 3) / 2;
