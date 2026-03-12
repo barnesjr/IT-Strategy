@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import { StoreProvider, useStore } from '@/store';
 import { Sidebar } from '@/components/Sidebar';
 import { Breadcrumb } from '@/components/Breadcrumb';
+import { StatsFooter } from '@/components/StatsFooter';
 import { ClientInfoPage } from '@/pages/ClientInfo';
 import { DashboardPage } from '@/pages/Dashboard';
 import { PillarSummaryPage } from '@/pages/PillarSummary';
 import { CapabilityAreaPage } from '@/pages/CapabilityArea';
 
 // Temporary placeholders for components not yet built
-const StatsFooter = () => null;
 const CommandPalette = ({ open: _open, onClose: _onClose }: { open: boolean; onClose: () => void }) => null;
 const findNextUnscored = (_data: unknown) => null;
 
