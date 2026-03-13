@@ -10,15 +10,21 @@ Usage:
 import subprocess
 import sys
 import os
+import shutil
 from pathlib import Path
 
 BASE = Path(__file__).parent
 
 
+def _npm() -> str:
+    """Return the npm command, handling Windows where it's npm.cmd."""
+    return shutil.which("npm") or "npm"
+
+
 def build_frontend():
     print("Building frontend...")
     subprocess.run(
-        ["npm", "run", "build"],
+        [_npm(), "run", "build"],
         cwd=str(BASE / "frontend"),
         check=True,
     )
@@ -39,7 +45,7 @@ def run_dev():
     # Start frontend dev server
     print("Starting frontend dev server on :5173...")
     frontend = subprocess.Popen(
-        ["npm", "run", "dev"],
+        [_npm(), "run", "dev"],
         cwd=str(BASE / "frontend"),
     )
 
@@ -111,7 +117,6 @@ def build_package():
 
 def assemble_distribution():
     """Assemble distribution ZIP with executable, templates, framework, README."""
-    import shutil
     import platform
 
     build_package()  # Ensure executable is built
